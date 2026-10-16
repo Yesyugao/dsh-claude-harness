@@ -1,0 +1,8 @@
+# dsh-claude-harness — Claude branding for the desktop app.
+#
+# This row only loads the host half (macOS app icon + bundle name). The Claude
+# Code style UI skin is its own package (dsh-claude-style), declared as a
+# dependency of this one so installing this package pulls the whole look.
+- insert:
+    - id: claude-harness-branding
+      name: dsh-claude-harness

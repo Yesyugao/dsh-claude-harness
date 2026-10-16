@@ -1,0 +1,60 @@
+{
+  "name": "dsh-claude-harness",
+  "version": "0.1.0",
+  "description": "One package for whole Claude branding of the DeepSeek Harness desktop app: the Claude-style UI (via dsh-claude-style), the Claude app icon, and the macOS bundle name \"Claude Harness\".",
+  "type": "module",
+  "license": "MIT",
+  "author": "Yesyugao",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yesyugao/dsh-claude-harness.git"
+  },
+  "homepage": "https://github.com/Yesyugao/dsh-claude-harness#readme",
+  "bugs": {
+    "url": "https://github.com/Yesyugao/dsh-claude-harness/issues"
+  },
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "dsh-claude-harness": "bin/dsh-claude-harness.mjs"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "assets",
+    "test",
+    "cordis.patch.yml",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22.6"
+  },
+  "os": [
+    "darwin"
+  ],
+  "scripts": {
+    "test": "node test/branding.test.mjs && node test/routes.test.mjs"
+  },
+  "dependencies": {
+    "dsh-claude-style": "^0.14.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "claude",
+    "claude-code",
+    "branding",
+    "macos",
+    "icon",
+    "app-icon"
+  ]
+}
