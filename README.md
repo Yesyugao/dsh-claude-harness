@@ -69,16 +69,32 @@ bundle, so the icon and the name come back as DeepSeek.
 
 Steps 3–5 are skipped when the values already match, so re-running is cheap.
 
+## 中文衬线体
+
+`dsh-claude-style` 的衬线字体栈以 `"Anthropic Serif Web Text","Claude Style Noto Serif"` 开头，但这两个族名都没有汉字字形（插件自带的 Noto Serif 是 802 字形的拉丁子集），所以汉字会一路回退到栈尾的 `"Noto Sans SC","PingFang SC"` —— 衬线标题里的中文全成了黑体。
+
+插件的浏览器半边（`lib/client.js`，随本包一起加载）给栈里第一个族名补了一个**只覆盖汉字**的 `@font-face`：
+
+```css
+@font-face{font-family:"Anthropic Serif Web Text";
+  src:local("Songti SC"),local("Noto Serif SC"),local("Source Han Serif SC");
+  unicode-range:U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF,U+20000-2FA1F}
+```
+
+汉字走系统宋体，拉丁字母仍由 Anthropic Serif 出图，两边互不打扰。不装 Anthropic 字体也照样生效（栈里第一个族名没有可用字形时，浏览器继续找同族的下一张 face）。
+
 ## Notes
 
 - macOS only (`os: ["darwin"]`), Node ≥ 22.6.
+- 字体设置选「跟随宿主」时字体栈只有 `--dsw-font-family`（无衬线），中文衬线体补丁不介入。
 - Ad-hoc re-signing resets TCC grants; macOS may ask again for folder access.
 - `restore` puts back the plist/icon/name from the backup, not a different app version.
 - The icon: 1024×1024 squircle, `#D97757`, with the Claude mark centred by pixel
   centroid. Source `assets/icon.html` → `assets/Claude.icns`.
 - Check: `npm test` — `test/branding.test.mjs` builds a throwaway fake bundle and
   exercises apply → no-op → restore against the real `codesign`;
-  `test/routes.test.mjs` drives the HTTP handler with a mock request/response.
+  `test/routes.test.mjs` drives the HTTP handler with a mock request/response;
+  `test/client.test.mjs` runs the browser half against a minimal DOM stub.
 
 ## License
 

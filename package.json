@@ -1,6 +1,6 @@
 {
   "name": "dsh-claude-harness",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "One package for whole Claude branding of the DeepSeek Harness desktop app: the Claude-style UI (via dsh-claude-style), the Claude app icon, and the macOS bundle name \"Claude Harness\".",
   "type": "module",
   "license": "MIT",
@@ -16,6 +16,7 @@
   "main": "lib/index.js",
   "exports": {
     ".": "./lib/index.js",
+    "./client": "./lib/client.js",
     "./package.json": "./package.json"
   },
   "bin": {
@@ -36,7 +37,7 @@
     "darwin"
   ],
   "scripts": {
-    "test": "node test/branding.test.mjs && node test/routes.test.mjs"
+    "test": "node test/branding.test.mjs && node test/routes.test.mjs && node test/client.test.mjs"
   },
   "dependencies": {
     "dsh-claude-style": "^0.14.0"
@@ -44,6 +45,10 @@
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": []
     }
   },
   "keywords": [
